@@ -20,19 +20,38 @@ export const Navigation: React.FC<NavigationProps> = ({ activeTab, setActiveTab 
   const { isAdmin } = useAuth();
   const { t } = useLanguage();
 
+  const CANONICAL_NAV_MAP: Record<string, string> = {
+    dashboard: 'Dashboard',
+    transactions: 'Transactions',
+    budgets: 'Budget',
+    resources: 'Resources',
+    vault: 'Documents',
+    education: 'Learn Finance',
+    admin: 'Admin Portal',
+  };
+
+  const resolveNavLabel = (id: string, key: string): string => {
+    const canonical = CANONICAL_NAV_MAP[id] || 'Dashboard';
+    const translated = t(key);
+    if (!translated || translated === key || translated.startsWith('nav_')) {
+      return canonical;
+    }
+    return translated;
+  };
+
   const navItems = [
-    { id: 'dashboard', label: t('nav_dashboard'), icon: LayoutDashboard },
-    { id: 'transactions', label: t('nav_transactions'), icon: ReceiptText },
-    { id: 'budgets', label: t('nav_budgets'), icon: PieChart },
-    { id: 'resources', label: t('nav_resources'), icon: MapPin },
-    { id: 'vault', label: t('nav_vault'), icon: Lock },
-    { id: 'education', label: t('nav_education'), icon: GraduationCap },
+    { id: 'dashboard', label: resolveNavLabel('dashboard', 'nav_dashboard'), icon: LayoutDashboard },
+    { id: 'transactions', label: resolveNavLabel('transactions', 'nav_transactions'), icon: ReceiptText },
+    { id: 'budgets', label: resolveNavLabel('budgets', 'nav_budgets'), icon: PieChart },
+    { id: 'resources', label: resolveNavLabel('resources', 'nav_resources'), icon: MapPin },
+    { id: 'vault', label: resolveNavLabel('vault', 'nav_vault'), icon: Lock },
+    { id: 'education', label: resolveNavLabel('education', 'nav_education'), icon: GraduationCap },
   ];
 
   if (isAdmin) {
     navItems.push({
       id: 'admin',
-      label: t('nav_admin'),
+      label: resolveNavLabel('admin', 'nav_admin'),
       icon: ShieldCheck,
     });
   }
@@ -88,7 +107,7 @@ export const Navigation: React.FC<NavigationProps> = ({ activeTab, setActiveTab 
                 }`}
               >
                 <Icon className={`w-4 h-4 ${isActive ? 'stroke-[2.5]' : ''}`} />
-                <span className="text-[10px] font-medium leading-none tracking-tight truncate max-w-[56px]">
+                <span className="text-[10px] font-medium leading-none tracking-tight truncate w-full text-center px-0.5">
                   {item.label}
                 </span>
               </button>

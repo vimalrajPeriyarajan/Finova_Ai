@@ -50,15 +50,44 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   useEffect(() => {
-    // If no token exists on first load, auto-login with default student account for instant demo experience
-    const initialToken = getAuthToken();
-    if (!initialToken) {
-      login('student@finova.in', 'password123').finally(() => {
-        setIsLoading(false);
-      });
-    } else {
-      fetchCurrentUser();
-    }
+    let isMounted = true;
+    const initAuth = async () => {
+      const initialToken = getAuthToken();
+      if (initialToken) {
+        try {
+          const res = await api.auth.getMe();
+          if (res.success && res.data?.user) {
+            if (isMounted) {
+              setUser(res.data.user);
+              setIsLoading(false);
+            }
+            return;
+          }
+        } catch {
+          // Token expired or invalid, will auto-login default student demo account below
+        }
+      }
+
+      // No token exists or session expired: auto-login with default student account for seamless preview
+      try {
+        const res = await api.auth.login({ email: 'student@finova.in', password: 'password123' });
+        if (res.success && res.data) {
+          setAuthToken(res.data.token);
+          if (isMounted) {
+            setTokenState(res.data.token);
+            setUser(res.data.user);
+          }
+        }
+      } catch (err) {
+        console.error('Initial login error:', err);
+      } finally {
+        if (isMounted) {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    initAuth();
 
     const handleUnauthorized = () => {
       setUser(null);
@@ -67,6 +96,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     window.addEventListener('finova:unauthorized', handleUnauthorized);
     return () => {
+      isMounted = false;
       window.removeEventListener('finova:unauthorized', handleUnauthorized);
     };
   }, []);

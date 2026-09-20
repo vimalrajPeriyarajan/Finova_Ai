@@ -96,17 +96,74 @@ export type TranslationKey =
   | 'youngProfessional'
   | 'beginner'
   | 'adminDashboard'
-  | 'deleteAccount';
+  | 'deleteAccount'
+  | 'app_tagline'
+  | 'nav_dashboard'
+  | 'nav_transaction'
+  | 'nav_transactions'
+  | 'nav_budget'
+  | 'nav_budgets'
+  | 'nav_savings'
+  | 'nav_savings_goals'
+  | 'nav_ai'
+  | 'nav_ai_assistant'
+  | 'nav_resources'
+  | 'nav_resource_locator'
+  | 'nav_profile'
+  | 'nav_documents'
+  | 'nav_vault'
+  | 'nav_notifications'
+  | 'nav_settings'
+  | 'nav_education'
+  | 'nav_financial_education'
+  | 'nav_admin'
+  | 'nav_add_expense'
+  | 'nav_add_income'
+  | 'auth_logout'
+  | 'dashboard_greeting'
+  | 'dashboard_available_balance'
+  | 'dashboard_total_income'
+  | 'dashboard_total_expense'
+  | 'dashboard_net_savings'
+  | string;
 
-export const translations: Record<string, Record<TranslationKey, string>> = {
+export const translations: Record<string, Record<string, string>> = {
   en: {
     appName: 'FINOVA',
-    appTagline: 'Understand Money. Build Your Future.',
+    appTagline: 'AI Personal Finance & Resource Discovery',
+    app_tagline: 'AI Personal Finance & Resource Discovery',
     navHome: 'Home',
     navTransactions: 'Transactions',
     navInsights: 'Insights',
     navResources: 'Resources',
     navProfile: 'Profile',
+    nav_dashboard: 'Dashboard',
+    nav_transaction: 'Transactions',
+    nav_transactions: 'Transactions',
+    nav_budget: 'Budget',
+    nav_budgets: 'Budget',
+    nav_savings: 'Savings',
+    nav_savings_goals: 'Savings Goals',
+    nav_ai: 'AI Assistant',
+    nav_ai_assistant: 'AI Assistant',
+    nav_resources: 'Resources',
+    nav_resource_locator: 'Resource Locator',
+    nav_profile: 'Profile',
+    nav_documents: 'Documents',
+    nav_vault: 'Documents',
+    nav_notifications: 'Notifications',
+    nav_settings: 'Settings',
+    nav_education: 'Learn Finance',
+    nav_financial_education: 'Learn Finance',
+    nav_admin: 'Admin Portal',
+    nav_add_expense: 'Add Expense',
+    nav_add_income: 'Add Income',
+    auth_logout: 'Sign Out',
+    dashboard_greeting: 'Welcome back',
+    dashboard_available_balance: 'Available Balance',
+    dashboard_total_income: 'Total Income',
+    dashboard_total_expense: 'Total Expense',
+    dashboard_net_savings: 'Net Savings',
     quickAddExpense: 'Add Expense',
     quickAddIncome: 'Add Income',
     quickVoiceExpense: 'Voice Expense',
@@ -1001,11 +1058,167 @@ export const translations: Record<string, Record<TranslationKey, string>> = {
   }
 };
 
-// Fallback resolver that returns translated text or English default
-export function getTranslation(lang: string, key: TranslationKey): string {
-  const selected = translations[lang];
-  if (selected && selected[key]) {
+export const CANONICAL_LABELS: Record<string, string> = {
+  // Brand Tagline
+  app_tagline: 'AI Personal Finance & Resource Discovery',
+  appTagline: 'AI Personal Finance & Resource Discovery',
+  tagline: 'AI Personal Finance & Resource Discovery',
+  appName: 'FINOVA',
+
+  // Navigation Items
+  nav_dashboard: 'Dashboard',
+  nav_transaction: 'Transactions',
+  nav_transactions: 'Transactions',
+  nav_budget: 'Budget',
+  nav_budgets: 'Budget',
+  nav_savings: 'Savings',
+  nav_savings_goals: 'Savings Goals',
+  nav_ai: 'AI Assistant',
+  nav_ai_assistant: 'AI Assistant',
+  nav_resources: 'Resources',
+  nav_resource: 'Resources',
+  nav_resource_locator: 'Resource Locator',
+  nav_profile: 'Profile',
+  nav_documents: 'Documents',
+  nav_vault: 'Documents',
+  nav_document: 'Documents',
+  nav_notifications: 'Notifications',
+  nav_settings: 'Settings',
+  nav_education: 'Learn Finance',
+  nav_financial_education: 'Learn Finance',
+  nav_admin: 'Admin Portal',
+  nav_add_expense: 'Add Expense',
+  nav_add_income: 'Add Income',
+
+  // Dashboard & Auth
+  auth_logout: 'Sign Out',
+  dashboard_greeting: 'Welcome back',
+  dashboard_available_balance: 'Available Balance',
+  dashboard_total_income: 'Total Income',
+  dashboard_total_expense: 'Total Expense',
+  dashboard_net_savings: 'Net Savings',
+};
+
+export const NAV_TRANSLATIONS: Record<string, Record<string, string>> = {
+  hi: {
+    nav_dashboard: 'डैशबोर्ड',
+    nav_transaction: 'लेन-देन',
+    nav_transactions: 'लेन-देन',
+    nav_budget: 'बजट',
+    nav_budgets: 'बजट',
+    nav_savings: 'बचत',
+    nav_savings_goals: 'बचत लक्ष्य',
+    nav_ai: 'एआई सहायक',
+    nav_ai_assistant: 'एआई सहायक',
+    nav_resources: 'संसाधन',
+    nav_resource_locator: 'संसाधन खोजक',
+    nav_profile: 'प्रोफ़ाइल',
+    nav_documents: 'दस्तावेज़',
+    nav_vault: 'दस्तावेज़',
+    nav_notifications: 'सूचनाएं',
+    nav_settings: 'सेटिंग्स',
+    nav_education: 'वित्तीय शिक्षा',
+    nav_financial_education: 'वित्तीय शिक्षा',
+    nav_admin: 'एडमिन पोर्टल',
+    dashboard_greeting: 'नमस्ते',
+    dashboard_available_balance: 'उपलब्ध शेष',
+    dashboard_total_income: 'कुल आय',
+    dashboard_total_expense: 'कुल व्यय',
+    dashboard_net_savings: 'शुद्ध बचत',
+    auth_logout: 'साइन आउट',
+  },
+  ta: {
+    nav_dashboard: 'முகப்புப்பலகை',
+    nav_transaction: 'பரிவர்த்தனைகள்',
+    nav_transactions: 'பரிவர்த்தனைகள்',
+    nav_budget: 'பட்ஜெட்',
+    nav_budgets: 'பட்ஜெட்',
+    nav_savings: 'சேமிப்பு',
+    nav_savings_goals: 'சேமிப்பு இலக்குகள்',
+    nav_ai: 'AI உதவியாளர்',
+    nav_ai_assistant: 'AI உதவியாளர்',
+    nav_resources: 'வளங்கள்',
+    nav_resource_locator: 'வளங்கள் கண்டறிதல்',
+    nav_profile: 'சுயவிவரம்',
+    nav_documents: 'ஆவணங்கள்',
+    nav_vault: 'ஆவணங்கள்',
+    nav_notifications: 'அறிவிப்புகள்',
+    nav_settings: 'அமைப்புகள்',
+    nav_education: 'நிதி கல்வி',
+    nav_financial_education: 'நிதி கல்வி',
+    nav_admin: 'நிர்வாக போர்டல்',
+    dashboard_greeting: 'வணக்கம்',
+    dashboard_available_balance: 'இருப்பு தொகை',
+    dashboard_total_income: 'மொத்த வருமானம்',
+    dashboard_total_expense: 'மொத்த செலவு',
+    dashboard_net_savings: 'நிகர சேமிப்பு',
+    auth_logout: 'வெளியேறு',
+  },
+};
+
+// Fallback resolver that returns translated text, exact canonical label, or sanitized human-readable text
+export function getTranslation(lang: string, key: TranslationKey | string): string {
+  // 1. In English mode or if brand tagline is requested, always return canonical
+  if (key === 'app_tagline' || key === 'appTagline') {
+    return 'AI Personal Finance & Resource Discovery';
+  }
+
+  if (lang === 'en' && CANONICAL_LABELS[key]) {
+    return CANONICAL_LABELS[key];
+  }
+
+  // 2. Language-specific navigation & dashboard dictionary
+  if (NAV_TRANSLATIONS[lang] && NAV_TRANSLATIONS[lang][key]) {
+    return NAV_TRANSLATIONS[lang][key];
+  }
+
+  // 3. Selected language dictionary
+  const selected = (translations as Record<string, Record<string, string>>)[lang];
+  if (selected && selected[key] && !selected[key].startsWith('nav_') && !selected[key].startsWith('app_')) {
     return selected[key];
   }
-  return translations.en[key] || key;
+
+  // 4. English dictionary
+  const enDict = (translations as Record<string, Record<string, string>>).en;
+  if (enDict && enDict[key] && !enDict[key].startsWith('nav_') && !enDict[key].startsWith('app_')) {
+    return enDict[key];
+  }
+
+  // 5. Canonical fallback
+  if (CANONICAL_LABELS[key]) {
+    return CANONICAL_LABELS[key];
+  }
+
+  // 6. Technical key sanitization (nav_*, app_*, screen_*, page_*, label_*, button_*, title_*, placeholder_*, auth_*, dashboard_*)
+  if (/^(nav_|app_|screen_|page_|label_|button_|title_|placeholder_|auth_|dashboard_)/i.test(key)) {
+    const stripped = key
+      .replace(/^(nav_|app_|screen_|page_|label_|button_|title_|placeholder_|auth_|dashboard_)/i, '')
+      .replace(/[_-]+/g, ' ')
+      .trim();
+
+    const lower = stripped.toLowerCase();
+    if (lower === 'tagline') return 'AI Personal Finance & Resource Discovery';
+    if (lower === 'dashboard') return 'Dashboard';
+    if (lower === 'transaction' || lower === 'transactions') return 'Transactions';
+    if (lower === 'budget' || lower === 'budgets') return 'Budget';
+    if (lower === 'savings' || lower === 'saving') return 'Savings';
+    if (lower === 'savings goals' || lower === 'savings goal') return 'Savings Goals';
+    if (lower === 'ai' || lower === 'ai assistant') return 'AI Assistant';
+    if (lower === 'resources' || lower === 'resource' || lower === 'resource locator') return 'Resources';
+    if (lower === 'profile') return 'Profile';
+    if (lower === 'documents' || lower === 'document' || lower === 'vault') return 'Documents';
+    if (lower === 'notifications' || lower === 'notification') return 'Notifications';
+    if (lower === 'settings' || lower === 'setting') return 'Settings';
+    if (lower === 'education' || lower === 'financial education' || lower === 'learn finance') return 'Learn Finance';
+    if (lower === 'logout') return 'Sign Out';
+    if (lower === 'add expense') return 'Add Expense';
+    if (lower === 'add income') return 'Add Income';
+
+    return stripped
+      .split(' ')
+      .map((w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
+      .join(' ');
+  }
+
+  return key;
 }

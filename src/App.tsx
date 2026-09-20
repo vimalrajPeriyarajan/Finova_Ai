@@ -45,7 +45,7 @@ const INCOME_CATEGORIES = [
 ];
 
 const MainAppContent: React.FC = () => {
-  const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated, user, isLoading } = useAuth();
   const { t } = useLanguage();
 
   const [activeTab, setActiveTab] = useState<string>('dashboard');
@@ -65,6 +65,23 @@ const MainAppContent: React.FC = () => {
   const [quickMode, setQuickMode] = useState<string>('UPI');
   const [isSubmittingQuick, setIsSubmittingQuick] = useState<boolean>(false);
   const [quickError, setQuickError] = useState<string | null>(null);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-4">
+        <div className="flex items-center space-x-3 mb-4">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-500 flex items-center justify-center text-white font-black text-xl shadow-md">
+            F
+          </div>
+          <div>
+            <span className="text-xl font-black tracking-tight text-slate-900">FINOVA</span>
+            <p className="text-xs text-slate-500">AI Personal Finance & Resource Discovery</p>
+          </div>
+        </div>
+        <div className="w-6 h-6 border-2 border-emerald-600 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
 
   const handleOpenQuickTx = (defaultType?: 'INCOME' | 'EXPENSE') => {
     const type = defaultType || 'EXPENSE';
@@ -141,9 +158,9 @@ const MainAppContent: React.FC = () => {
       <footer className="bg-white border-t border-slate-200 mt-auto py-8 mb-16 md:mb-0">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-            <div className="flex items-center space-x-2">
-              <span className="font-black text-slate-900 tracking-tight">FINOVA</span>
-              <span>— {t('app_tagline')}</span>
+            <div className="flex flex-col text-left">
+              <span className="font-black text-slate-900 tracking-tight text-sm">FINOVA</span>
+              <span className="text-slate-600 font-medium text-xs">AI Personal Finance & Resource Discovery</span>
             </div>
             <div className="flex items-center space-x-4 text-[11px]">
               <span>RBI Bank Directory</span>

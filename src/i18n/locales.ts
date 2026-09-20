@@ -5,7 +5,7 @@ export interface LanguageOption {
 }
 
 export const SUPPORTED_LANGUAGES: LanguageOption[] = [
-  { code: 'en', name: 'English', nativeName: 'English' },
+  { code: 'en', name: 'English', nativeName: 'EN' },
   { code: 'hi', name: 'Hindi', nativeName: 'हिन्दी' },
   { code: 'ta', name: 'Tamil', nativeName: 'தமிழ்' },
   { code: 'te', name: 'Telugu', nativeName: 'తెలుగు' },
